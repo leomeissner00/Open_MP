@@ -1,0 +1,2366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-01-24 mar. 08:13 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OpenMP programming course</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Alfredo Buttari (alfredo.buttari@irit.fr)" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">OpenMP programming course</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf4f4958">1. How to use this document</a>
+<ul>
+<li><a href="#orgd63d3e2">1.1. What is org-mode</a></li>
+<li><a href="#org2e63ef3">1.2. Code blocks</a></li>
+<li><a href="#org96b618e">1.3. Compiling and running a tangled code block</a></li>
+<li><a href="#orga8708d6">1.4. Some other useful tricks</a></li>
+</ul>
+</li>
+<li><a href="#orgf1db94a">2. Introduction</a>
+<ul>
+<li><a href="#org1bc0228">2.1. Parallel computer architectures</a></li>
+<li><a href="#org0047e91">2.2. Shared memory: SMP vs NUMA</a></li>
+<li><a href="#orged69ef0">2.3. Multicore processors: why?</a></li>
+<li><a href="#org76fa52f">2.4. Multicore processors: why?</a></li>
+<li><a href="#orgd48c9ea">2.5. Multicore architecture</a></li>
+<li><a href="#orgca1398b">2.6. How to program multicore computers?</a></li>
+</ul>
+</li>
+<li><a href="#orgd0a902d">3. The OpenMP standard</a>
+<ul>
+<li><a href="#org7c96d56">3.1. Basic ideas and components</a></li>
+<li><a href="#org11b8a09">3.2. Basic ideas and components</a></li>
+<li><a href="#orgebe90e2">3.3. Disclaimer</a></li>
+<li><a href="#orgbe4a238">3.4. Fork-join execution model</a></li>
+</ul>
+</li>
+<li><a href="#org86c0483">4. Parallel region</a>
+<ul>
+<li><a href="#org0bffa5a">4.1. Parallel region directive syntax</a></li>
+<li><a href="#org3962fae">4.2. A simple hello world example in OpenMP</a></li>
+<li><a href="#org72c8fc8">4.3. A slightly more complex hello world example in OpenMP</a></li>
+<li><a href="#org724b927">4.4. Parallel region: how many threads?</a></li>
+<li><a href="#orgfedf4fb">4.5. Parallel region: how many threads?</a></li>
+<li><a href="#org7ffd81d">4.6. Hello world with a bug</a></li>
+<li><a href="#orgb849e05">4.7. Data sharing 1/2</a></li>
+<li><a href="#orgf1bc95e">4.8. Data sharing 2/2</a></li>
+<li><a href="#orga6d5586">4.9. Hello world bugfix</a></li>
+</ul>
+</li>
+<li><a href="#orgc1de7af">5. Work distribution and sharing</a>
+<ul>
+<li><a href="#org06bea4b">5.1. Dependencies</a>
+<ul>
+<li><a href="#org41b16c3">5.1.1. Dependencies</a></li>
+<li><a href="#org07a0c3c">5.1.2. Dependencies</a></li>
+<li><a href="#org768e138">5.1.3. Dependencies</a></li>
+<li><a href="#orgb3093ab">5.1.4. Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#orgd1a8539">5.2. Master</a></li>
+<li><a href="#orga45f17f">5.3. Single</a></li>
+<li><a href="#orgd93036a">5.4. Single vs master</a></li>
+<li><a href="#org3ae3e27">5.5. Parallel loops</a>
+<ul>
+<li><a href="#org957a33c">5.5.1. Parallel</a></li>
+<li><a href="#org599bca7">5.5.2. Parallel</a></li>
+<li><a href="#org534a783">5.5.3. Schedule</a></li>
+<li><a href="#org28981be">5.5.4. Schedule</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org768c0b3">6. Threads synchronization</a>
+<ul>
+<li><a href="#orgd78ca79">6.1. Barriers</a>
+<ul>
+<li><a href="#org22c4359">6.1.1. Barrier</a></li>
+<li><a href="#org4674216">6.1.2. Barrier</a></li>
+</ul>
+</li>
+<li><a href="#org2162d54">6.2. Critical sections</a>
+<ul>
+<li><a href="#org7832dd7">6.2.1. Critical</a></li>
+<li><a href="#org829a6c6">6.2.2. Critical scope</a></li>
+</ul>
+</li>
+<li><a href="#org39b483e">6.3. Atomic instructions</a>
+<ul>
+<li><a href="#orgb92f60b">6.3.1. Atomic</a></li>
+<li><a href="#org6d9f20d">6.3.2. Atomic</a></li>
+<li><a href="#orgd6f9a5a">6.3.3. Atomic</a></li>
+<li><a href="#orgc5cd7f9">6.3.4. Atomic</a></li>
+</ul>
+</li>
+<li><a href="#org6ba7c1e">6.4. Reductions</a>
+<ul>
+<li><a href="#org9527685">6.4.1. Reductions</a></li>
+<li><a href="#org6012049">6.4.2. Reductions</a></li>
+<li><a href="#org96e3dcc">6.4.3. Reductions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5c6eb3b">7. Tasks</a>
+<ul>
+<li><a href="#orgf8eb5e1">7.1. Task</a></li>
+<li><a href="#org998ee5d">7.2. Task data</a></li>
+<li><a href="#org15726bf">7.3. Task data</a></li>
+<li><a href="#org59be8b4">7.4. Task data</a></li>
+<li><a href="#org5c8c79f">7.5. Task if</a></li>
+<li><a href="#org41ddf48">7.6. Taskwait</a></li>
+<li><a href="#org0cfc04b">7.7. Task dependencies</a></li>
+<li><a href="#org88ce1a3">7.8. Task dependencies</a></li>
+<li><a href="#org7799276">7.9. Task priorities</a></li>
+<li><a href="#orgd2da1df">7.10. Task priorities</a></li>
+<li><a href="#org511f9b9">7.11. Task dependencies and pointers</a></li>
+</ul>
+</li>
+<li><a href="#org7e1ee40">8. Locks</a>
+<ul>
+<li><a href="#org84a7c6b">8.1. Locks</a></li>
+<li><a href="#orgd982b5b">8.2. Locks</a></li>
+<li><a href="#org6866f16">8.3. Locks</a></li>
+<li><a href="#orgdfe3b4b">8.4. Locks</a></li>
+</ul>
+</li>
+<li><a href="#org197fb24">9. Aux code</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf4f4958" class="outline-2">
+<h2 id="orgf4f4958"><span class="section-number-2">1</span> How to use this document</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgd63d3e2" class="outline-3">
+<h3 id="orgd63d3e2"><span class="section-number-3">1.1</span> What is org-mode</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+This is org-mode document. Org-mode is a markup language which allows to write text documents
+containing executable code blocks.
+</p>
+
+<p>
+Org-mode can do much more than this and you can find out more <a href="https://orgmode.org">here.</a>
+</p>
+
+<p>
+Org-mode works in emacs (the best editor in the world).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2e63ef3" class="outline-3">
+<h3 id="org2e63ef3"><span class="section-number-3">1.2</span> Code blocks</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+You can do two things with code blocks (besides simply reading them):
+</p>
+
+<ol class="org-ol">
+<li>execute: this can be done using the <code>C-c C-c</code> (Ctrl-c Ctrl-c) keybinding. The stdout of the code
+will be appended below the code block itself</li>
+
+<li>tangle: tangling a code block means creating a separate file that contains the code which can
+thus be compiled and run as usual. If you hit <code>C-c C-v C-t</code> (this call the emacs function
+<code>org-babel-tangle</code>) all the code blocks in this file will be tangled. If, instead, you only want
+to tangle a single code blocks, go to that block and hit <code>C-u C-c C-v C-t</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org96b618e" class="outline-3">
+<h3 id="org96b618e"><span class="section-number-3">1.3</span> Compiling and running a tangled code block</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Once you have tangled a code block, you can compile and run it like any other code. For the code
+blocks of this document to work, you have to use the following compile command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">gcc -fopenmp -I. aux.c code_block.c -o code_block
+</pre>
+</div>
+
+<p>
+And then you can run it by launching the <code>code_block</code> executable
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">./code_block
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga8708d6" class="outline-3">
+<h3 id="orga8708d6"><span class="section-number-3">1.4</span> Some other useful tricks</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li><b>Set an environment variable</b>: in order to set an environment variable within emacs you have to
+hit <code>M-x setenv</code> then write the name of the variable, hit enter, write its value and hit enter again</li>
+
+<li><b>Refresh images in an org-mode document</b>: if images don't show up, use the command <code>M-x
+     org-redisplay-inline-images</code></li>
+
+<li><b>Show this document as a presentation</b>: to show this document as a sequence of slides, you must
+install the emacs <code>org-tree-slide</code> package. Then open the document and execute the command <code>M-x
+     org-tree-slide-mode</code>. You can mode forward and backward using the <code>&gt;</code> and <code>&lt;</code> keys</li>
+
+<li><b>Export and org-mode document</b>: Org-mode lets you export org-mode documents in various formats
+such as pdf or html. Just hit <code>C-c C-e</code> and follow the instructions.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgf1db94a" class="outline-2">
+<h2 id="orgf1db94a"><span class="section-number-2">2</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org1bc0228" class="outline-3">
+<h3 id="org1bc0228"><span class="section-number-3">2.1</span> Parallel computer architectures</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<div class="figure">
+<p><img src="figures/par_arch.png" alt="par_arch.png" width="700px" />
+</p>
+</div>
+
+
+<p>
+Roughly speaking, parallel computers can be classified into two types:
+</p>
+
+<ol class="org-ol">
+<li><b>Shared memory</b>: all the CPUs share one (logical) memory, i.e., all processes can access the
+same addressing space regardless of the CPU they are running on. This makes it simple to
+communicate data from one process to another</li>
+
+<li><b>Distributed memory</b>: the computer is actually formed of multiple node, each having one or more
+CPUs and its own memory. Nodes are connected through a network. A process running on one node
+can only access data on the local memory; therefore, if it needs data that is on another node,
+a message must be exchanged through the network</li>
+</ol>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org0047e91" class="outline-3">
+<h3 id="org0047e91"><span class="section-number-3">2.2</span> Shared memory: SMP vs NUMA</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+One "logical memory" does not necessarily mean that only one physical memory exists. If multiple
+memory modules exist, access to data may non-uniform
+</p>
+
+<ul class="org-ul">
+<li>Symmetric Multi-Processor (SMP): all CPUs can access to all data with the same bandwidth and
+latency</li>
+<li>Non-Uniform Memory Access (NUMA): all CPUs can access to all data but bandwidth and latency
+depends on where the data is placed</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="figures/numa.png" alt="numa.png" width="300px" />     
+</p>
+</div>
+
+<p>
+Both types of shared-memory architectures can be programmed using the same tools and
+technologies. When performance is a concern, though, special care must be taken for NUMA machines
+(we will not cover in this course)
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orged69ef0" class="outline-3">
+<h3 id="orged69ef0"><span class="section-number-3">2.3</span> Multicore processors: why?</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Until the early 00's all processors had only one core (in fact we did not use the word "core" at
+all). Then why have multicore processors become ubiquitous? Energy consumption is the reason why:
+</p>
+
+<p>
+\(P=CV^2f\)
+</p>
+
+<p>
+however there is a linear dependence between \(f\) and \(V\), therefore \(P\) grows as the cube of
+\(f\)!!!
+</p>
+
+<p>
+Because the performance of single-core processors could only be improved by increasing the
+frequency, this trend became unsustainable.
+</p>
+
+<p>
+Multicore processors design relies on <b>Thread Level Parallelism</b> to improve performance. This
+means that more transistors are used to assemble multiple execution units (i.e., cores) on a
+single chip. This improves performance with only a linear increase in the energy consumption: the
+capacitance \(C\) grows because of the increased number of transistors.
+</p>
+
+<p>
+In fact, it is also possible to produce faster processors which consume less energy!!! Consider a
+quad-core processor with frequency \(0.6f\): it will be 2.4 times faster and consume roughly 15\%
+less energy
+</p>
+</div>
+</div>
+
+<div id="outline-container-org76fa52f" class="outline-3">
+<h3 id="org76fa52f"><span class="section-number-3">2.4</span> Multicore processors: why?</h3>
+<div class="outline-text-3" id="text-2-4">
+
+<div class="figure">
+<p><img src="figures/procs_history.png" alt="procs_history.png" width="900px" />
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgd48c9ea" class="outline-3">
+<h3 id="orgd48c9ea"><span class="section-number-3">2.5</span> Multicore architecture</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Multicore computer: what does it look like?
+</p>
+
+<p>
+The <code>hwloc</code> library is designed to retrieve all the details of the architecture. For example, on my
+computer, I can run the <code>lstopo</code> program from <code>hwloc</code> to retrieve the architecture:
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-sh">lstopo --of png 
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgca1398b" class="outline-3">
+<h3 id="orgca1398b"><span class="section-number-3">2.6</span> How to program multicore computers?</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Many options exist, but they are not all simple, portable, efficient etc.
+</p>
+
+<p>
+Examples:
+</p>
+
+<ul class="org-ul">
+<li><b>pThreads</b> (POSIX Threads): difficult to use and debug, not fully portable</li>
+
+<li><b>Intel TBB/OneAPI</b>: proprietary</li>
+
+<li><b>Cilk</b>: limited support and portability</li>
+
+<li><b>OpenMP</b>: extremely portable, efficient, relatively easy to use. huge community and support</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orgd0a902d" class="outline-2">
+<h2 id="orgd0a902d"><span class="section-number-2">3</span> The OpenMP standard</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org7c96d56" class="outline-3">
+<h3 id="org7c96d56"><span class="section-number-3">3.1</span> Basic ideas and components</h3>
+<div class="outline-text-3" id="text-3-1">
+
+<div class="figure">
+<p><img src="figures/openmp_logo.png" alt="openmp_logo.png" width="500px" />
+</p>
+</div>
+
+
+<p>
+<b>OpenMP</b> (Open specifications for MultiProcessing) is an Application Program Interface (API) to
+explicitly direct multi-threaded, shared memory parallelism.
+</p>
+
+<ul class="org-ul">
+<li>First standard 1.0 was published in 1997</li>
+
+<li>Latest standard is 5.2 published in November 2021
+
+<ul class="org-ul">
+<li>Full specs are at this <a href="https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5-2.pdf">URL</a></li>
+
+<li>Examples and exercises are at this <a href="https://www.openmp.org/wp-content/uploads/openmp-examples-5.2.1.pdf">URL</a></li>
+</ul></li>
+
+<li>Many resources at <a href="https://www.openmp.org">https://www.openmp.org</a></li>
+</ul>
+
+<p>
+The OpenMP standard is developed by an advisory board that includes many members from academia
+(UTK, LBNL, ANL, NASA,&#x2026;) and industry (Intel, AMD, NEC, Fujitsu, NVIDIA,&#x2026;)
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-org11b8a09" class="outline-3">
+<h3 id="org11b8a09"><span class="section-number-3">3.2</span> Basic ideas and components</h3>
+<div class="outline-text-3" id="text-3-2">
+
+<div class="figure">
+<p><img src="figures/openmp_logo.png" alt="openmp_logo.png" width="500px" />
+</p>
+</div>
+
+
+<ul class="org-ul">
+<li>OpenMP is Comprised of three primary API components:
+<ol class="org-ol">
+<li><b>Language directives</b></li>
+<li><b>Runtime library routines</b></li>
+<li><b>Environment variables</b></li>
+</ol></li>
+
+<li>Portable:
+<ul class="org-ul">
+<li>Specifications for C/C++ and Fortran</li>
+<li>Already available on many systems (including Linux, Win, IBM, SGI etc.)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgebe90e2" class="outline-3">
+<h3 id="orgebe90e2"><span class="section-number-3">3.3</span> Disclaimer</h3>
+<div class="outline-text-3" id="text-3-3">
+
+<div class="figure">
+<p><img src="figures/openmp_logo.png" alt="openmp_logo.png" width="500px" />
+</p>
+</div>
+
+<p>
+This course does not cover the whole OpenMP standard.  The OpenMP manual is over 600 pages as of
+today (v5.2)
+</p>
+
+<p>
+Only a subset of constructs and clauses will be presented.
+</p>
+
+<p>
+Tons of tutorials can be found online but better be used with moderation.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgbe4a238" class="outline-3">
+<h3 id="orgbe4a238"><span class="section-number-3">3.4</span> Fork-join execution model</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+OpenMP is based on a fork-join execution model:
+</p>
+
+
+<div class="figure">
+<p><img src="figures/forkjoin.png" alt="forkjoin.png" width="700px" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>Execution is started by a single thread called master thread</li>
+
+<li>when a parallel region is encountered, the master thread spawns a set of threads</li>
+
+<li>the set of instructions enclosed in a parallel region is executed</li>
+
+<li>at the end of the parallel region all the threads synchronize and terminate leaving only the
+master</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org86c0483" class="outline-2">
+<h2 id="org86c0483"><span class="section-number-2">4</span> Parallel region</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org0bffa5a" class="outline-3">
+<h3 id="org0bffa5a"><span class="section-number-3">4.1</span> Parallel region directive syntax</h3>
+<div class="outline-text-3" id="text-4-1">
+<pre class="example">
+#pragma omp parallel [clause]
+                     if (scalar or logical expression)
+                     private(list)
+                     firstprivate(list)
+                     shared(list)
+                     default(private | shared | none)
+                     reduction(operator:list)
+                     num_threads(scalar integer expression)
+{
+  /* Structured code block */
+}
+</pre>
+
+<ul class="org-ul">
+<li>The <b>master</b> is a member of the team and has thread number 0</li>
+
+<li>Starting from the beginning of the region, the code is duplicated and all threads will execute
+that code.</li>
+
+<li>There is an <b>implied barrier</b> at the end of a parallel section.</li>
+
+<li>If any thread terminates within a parallel region, all threads in the team will terminate.</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org3962fae" class="outline-3">
+<h3 id="org3962fae"><span class="section-number-3">4.2</span> A simple hello world example in OpenMP</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Just a simple hello world with multiple threads:
+</p>
+
+<ul class="org-ul">
+<li>start with serial execution</li>
+
+<li>open a parallel region where:
+<ul class="org-ul">
+<li>each thread prints a message</li>
+</ul></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #FFA000;">#pragma</span> omp parallel
+{
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Hello world!\n"</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org72c8fc8" class="outline-3">
+<h3 id="org72c8fc8"><span class="section-number-3">4.3</span> A slightly more complex hello world example in OpenMP</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Just a simple hello world with multiple threads:
+</p>
+
+<ul class="org-ul">
+<li>start with serial execution</li>
+
+<li>open a parallel region where:
+<ul class="org-ul">
+<li>each thread reads its identifier and the total number of threads using, respectively, the
+<code>omp_get_thread_num()</code> and <code>omp_get_num_threads()</code></li>
+<li>prints a message</li>
+</ul></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #FFA000;">#pragma</span> omp parallel
+{
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Hello world from thread %2d in a pool of %2d.\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), <span style="color: #0097A7;">omp_get_num_threads</span>());
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org724b927" class="outline-3">
+<h3 id="org724b927"><span class="section-number-3">4.4</span> Parallel region: how many threads?</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+How many threads do we have in the parallel regions of a code? The
+number of threads depends on:
+</p>
+
+<ul class="org-ul">
+<li>Evaluation of the <code>if</code> clause (one or many)</li>
+
+<li>Setting of the <code>num_threads</code> clause</li>
+
+<li>Use of the <code>omp_set_num_threads()</code> library function</li>
+
+<li>Setting of the <code>OMP_NUM_THREADS</code> environment variable</li>
+
+<li>Implementation default - usually the number of CPUs on a node,
+though it could be dynamic</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgfedf4fb" class="outline-3">
+<h3 id="orgfedf4fb"><span class="section-number-3">4.5</span> Parallel region: how many threads?</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Complete example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>, <span style="color: #EF6C00;">nth</span>, <span style="color: #EF6C00;">n</span>=4;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Region 1 thread %2d / %2d.\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), <span style="color: #0097A7;">omp_get_num_threads</span>());
+}
+
+<span style="color: #0097A7;">omp_set_num_threads</span>(n);
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Region 2 thread %2d / %2d.\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), <span style="color: #0097A7;">omp_get_num_threads</span>());
+}
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">num_threads</span>(2)
+{
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Region 3 thread %2d / %2d.\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), <span style="color: #0097A7;">omp_get_num_threads</span>());
+}
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #00796b;">if</span>(n&lt;5)
+{
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Region 4 thread %2d / %2d.\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), <span style="color: #0097A7;">omp_get_num_threads</span>());
+}
+
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7ffd81d" class="outline-3">
+<h3 id="org7ffd81d"><span class="section-number-3">4.6</span> Hello world with a bug</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+Here is a minor variant of the hello world program&#x2026;with a bug
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>, <span style="color: #EF6C00;">nth</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+  iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+  nth = <span style="color: #0097A7;">omp_get_num_threads</span>();
+  <span style="color: #0097A7;">do_stuff</span>(1);
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Hello world from thread %d in a pool of %2d.\n"</span>, iam, nth);
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgb849e05" class="outline-3">
+<h3 id="orgb849e05"><span class="section-number-3">4.7</span> Data sharing 1/2</h3>
+<div class="outline-text-3" id="text-4-7">
+<ul class="org-ul">
+<li>Most variables are shared by default</li>
+
+<li>Global variables include:
+<ul class="org-ul">
+<li>Fortran: COMMON blocks, SAVE and MODULE variables</li>
+<li>C: File scope variables, static</li>
+</ul></li>
+
+<li>Private variables include:
+<ul class="org-ul">
+<li>Loop index variables (in !$OMP DO) constructs</li>
+<li>Stack variables in subroutines called from parallel regions</li>
+</ul></li>
+
+<li>Fortran: Automatic variables within a statement block</li>
+
+<li>The OpenMP Data Scope Attribute Clauses are used to explicitly define how variables should be
+scoped. They include:
+<ul class="org-ul">
+<li><code>private</code></li>
+<li><code>firstprivate</code></li>
+<li><code>shared</code></li>
+<li><code>default</code></li>
+<li><code>reduction</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgf1bc95e" class="outline-3">
+<h3 id="orgf1bc95e"><span class="section-number-3">4.8</span> Data sharing 2/2</h3>
+<div class="outline-text-3" id="text-4-8">
+<ul class="org-ul">
+<li><code>private(list)</code>: a new object of the same type is created for each thread (uninitialized!)</li>
+
+<li><code>firstprivate(list)</code>: Listed variables are initialized according to the value of their original
+objects prior to entry into the parallel or work-sharing construct.</li>
+
+<li><code>lastprivate(list)</code>: The value copied back into the original variable object is obtained from the
+last (sequentially) iteration or section of the enclosing construct.</li>
+
+<li><code>shared(list)</code>: only one object exists in memory and all the threads access it</li>
+
+<li><code>default(shared|private|none)</code>: sets the default scoping</li>
+
+<li><code>reduction(operator:list)</code>: performs a reduction on the variables that appear in its list.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orga6d5586" class="outline-3">
+<h3 id="orga6d5586"><span class="section-number-3">4.9</span> Hello world bugfix</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+Let's fix the bug: by declaring <code>iam</code> private, each thread will have its own copy of this
+variable
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>, <span style="color: #EF6C00;">nth</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+{
+  iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+  nth = <span style="color: #0097A7;">omp_get_num_threads</span>();
+  <span style="color: #0097A7;">do_stuff</span>(1);
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Hello world from thread %d in a pool of %2d.\n"</span>, iam, nth);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc1de7af" class="outline-2">
+<h2 id="orgc1de7af"><span class="section-number-2">5</span> Work distribution and sharing</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org06bea4b" class="outline-3">
+<h3 id="org06bea4b"><span class="section-number-3">5.1</span> Dependencies</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org41b16c3" class="outline-4">
+<h4 id="org41b16c3"><span class="section-number-4">5.1.1</span> Dependencies</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+The interest of parallel programming is not to execute the same workload multiple times but to
+distribute the workload to the available processes so that execution time can be reduced. This
+implies that multiple instructions will be executed <b>concurrently</b> (or, equivalently, <b>in
+parallel</b>).
+</p>
+
+<p>
+Two successive statements S1 and S2 can be executed concurrently if they are
+<b>independent</b>. According to the <b>Bernstein conditions</b> there exist three types of dependencies:
+</p>
+
+<ul class="org-ul">
+<li><b>Read-After-Write</b> or <b>true dependency</b> or <b>flow dependency</b>: if <code>Input(S2)</code> overlaps with
+<code>Output(S1)</code></li>
+
+<li><b>Write-After-Read</b> or <b>anti-dependency</b>: if <code>Output(S2)</code> overlaps with <code>Input(S1)</code></li>
+
+<li><b>Write-After-Write</b> or <b>output dependency</b>: if <code>Output(S2)</code> overlaps with <code>Output(S1)</code></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org07a0c3c" class="outline-4">
+<h4 id="org07a0c3c"><span class="section-number-4">5.1.2</span> Dependencies</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+Example. Are these two statements independent?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">a = b+c;
+e = d+a;
+</pre>
+</div>
+
+<p>
+What kind of dependency is there? RAW. Here is a more convoluted example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #00796b;">for</span>(i=1; i&lt;n; i++)
+  <span style="color: #0097A7;">x</span>[i] += x[i-1];
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org768e138" class="outline-4">
+<h4 id="org768e138"><span class="section-number-4">5.1.3</span> Dependencies</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+Example. Are these two statements independent?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">a = b+c;
+b = c*2;
+</pre>
+</div>
+
+<p>
+What kind of dependency is there? WAR. Note that WAR dependencies
+can be sometimes removed!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">d = b;
+a = d+c;
+b = c*2;
+</pre>
+</div>
+
+<p>
+Now the second and third statement have become independent. Here is
+a more convoluted example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #00796b;">for</span>(i=0; i&lt;n-1; i++)
+  <span style="color: #0097A7;">x</span>[i] += x[i+1];
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb3093ab" class="outline-4">
+<h4 id="orgb3093ab"><span class="section-number-4">5.1.4</span> Dependencies</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<p>
+Example. Are these two statements independent?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">c = a+b;
+c = 2;
+</pre>
+</div>
+
+<p>
+What kind of dependency is there? WAW. Here is a more convoluted
+example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #00796b;">for</span>(i=0; i&lt;n; i++)
+  c += x[i];
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd1a8539" class="outline-3">
+<h3 id="orgd1a8539"><span class="section-number-3">5.2</span> Master</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+The <code>master</code> directive identifies a code block which is only executed
+by the master thread
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp master
+    {
+      <span style="color: #0097A7;">do_stuff</span>(0.1);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">" ---&gt; This is only done by: %2d\n"</span>,iam);
+    }
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"      This is also done by: %2d.\n"</span>,iam);
+  }
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga45f17f" class="outline-3">
+<h3 id="orga45f17f"><span class="section-number-3">5.3</span> Single</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+The <code>single</code> directive identifies a code block which is only executed
+by one (any) thread
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp single
+    {
+      <span style="color: #0097A7;">do_stuff</span>(0.1);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">" ---&gt; This is only done by: %2d\n"</span>,iam);
+    }
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"      This is also done by: %2d.\n"</span>,iam);
+  }
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd93036a" class="outline-3">
+<h3 id="orgd93036a"><span class="section-number-3">5.4</span> Single vs master</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+One obvious difference between <code>single</code> and <code>master</code> is that with <code>master</code> only the thread with
+id 0 can execute the code block. This has a risk: you have to make sure that the master thread
+passes by that code block otherwise it will never be executed.
+</p>
+
+<p>
+Can you spot any other difference from executing the two code blocks above? There is an <b>implied
+barrier</b> at the end of the <code>single</code> block. It can be removed using the <code>nowait</code> clause
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp single nowait
+    {
+      <span style="color: #0097A7;">do_stuff</span>(0.1);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">" ---&gt; This is only done by: %2d\n"</span>,iam);
+    }
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"      This is also done by: %2d.\n"</span>,iam);
+  }
+</pre>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org3ae3e27" class="outline-3">
+<h3 id="org3ae3e27"><span class="section-number-3">5.5</span> Parallel loops</h3>
+<div class="outline-text-3" id="text-5-5">
+</div>
+<div id="outline-container-org957a33c" class="outline-4">
+<h4 id="org957a33c"><span class="section-number-4">5.5.1</span> Parallel</h4>
+<div class="outline-text-4" id="text-5-5-1">
+<p>
+In the code below, all the iterations in the loop are <b>independent</b>. This means that they can be
+executed <b>concurrently</b>. However the code below is wrong because it does not produce the same
+result as in sequential
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>, <span style="color: #EF6C00;">n</span>=4;
+<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">a</span>[n], <span style="color: #EF6C00;">b</span>[n], <span style="color: #EF6C00;">c</span>[n];
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(i)
+{
+
+  <span style="color: #00796b;">for</span> (i=0; i&lt;n; i++) {
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread %2d does iteration %2d\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>(),i);
+    a[i] += b[i]+c[i];
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org599bca7" class="outline-4">
+<h4 id="org599bca7"><span class="section-number-4">5.5.2</span> Parallel</h4>
+<div class="outline-text-4" id="text-5-5-2">
+<p>
+OpenMP provides a construct that automatically parallelizes loops by executing chunks of
+iterations concurrently. Note that the loop index <code>i</code> is implicitly <code>private</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>, <span style="color: #EF6C00;">n</span>=4;
+<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">a</span>[n], <span style="color: #EF6C00;">b</span>[n], <span style="color: #EF6C00;">c</span>[n];
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp <span style="color: #00796b;">for</span>
+  <span style="color: #00796b;">for</span> (i=0; i&lt;n; i++) {
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread %2d does iteration %2d\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>(),i);
+    a[i] += b[i]+c[i];
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org534a783" class="outline-4">
+<h4 id="org534a783"><span class="section-number-4">5.5.3</span> Schedule</h4>
+<div class="outline-text-4" id="text-5-5-3">
+<p>
+The <code>schedule</code> clause in the <code>for</code> construct specifies how the iterations of the loop are
+assigned to threads:
+</p>
+
+<ul class="org-ul">
+<li><code>static</code>: loop iterations are divided into pieces of size chunk and then statically assigned
+to threads in a round-robin fashion</li>
+
+<li><code>dynamic</code>: loop iterations are divided into pieces of size chunk, and dynamically scheduled
+among the threads; when a thread finishes one chunk, it is dynamically assigned another</li>
+
+<li><code>guided</code>: for a chunk size of 1, the size of each chunk is proportional to the number of
+unassigned iterations divided by the number of threads, decreasing to 1. For a chunk size with
+value k (greater than 1), the size of each chunk is determined in the same way with the
+restriction that the chunks do not contain fewer than k iterations</li>
+
+<li><code>runtime</code>: The scheduling decision is deferred until runtime by the environment variable OMP
+SCHEDULE</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org28981be" class="outline-4">
+<h4 id="org28981be"><span class="section-number-4">5.5.4</span> Schedule</h4>
+<div class="outline-text-4" id="text-5-5-4">
+<p>
+Let's see how <code>schedule</code> works:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C" id="orgaa20bb8"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>;
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #00796b;">for</span> <span style="color: #0097A7;">schedule</span>(<span style="color: #00796b;">static</span>,25)
+<span style="color: #00796b;">for</span> (i=0; i&lt;400; i++)
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"%3d  %2d\n"</span>,i,<span style="color: #0097A7;">omp_get_thread_num</span>());
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org768c0b3" class="outline-2">
+<h2 id="org768c0b3"><span class="section-number-2">6</span> Threads synchronization</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-orgd78ca79" class="outline-3">
+<h3 id="orgd78ca79"><span class="section-number-3">6.1</span> Barriers</h3>
+<div class="outline-text-3" id="text-6-1">
+</div>
+<div id="outline-container-org22c4359" class="outline-4">
+<h4 id="org22c4359"><span class="section-number-4">6.1.1</span> Barrier</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+A barrier is simply a waiting point: all threads must wait for all the others to reach a barrier
+point before moving on. Example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+  <span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+    <span style="color: #00796b;">if</span>(iam==0){
+      <span style="color: #0097A7;">do_stuff</span>(0.5); <span style="color: #607d8b;">// </span><span style="color: #607d8b;">0.5 seconds</span>
+    } <span style="color: #00796b;">else</span> {
+      <span style="color: #0097A7;">do_stuff</span>(0.3); <span style="color: #607d8b;">// </span><span style="color: #607d8b;">0.3 seconds</span>
+    }
+<span style="color: #FFA000;">#pragma</span> omp barrier
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread %2d reached this point at time %f.\n"</span>,iam,<span style="color: #0097A7;">secs</span>()-t);
+  }
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org4674216" class="outline-4">
+<h4 id="org4674216"><span class="section-number-4">6.1.2</span> Barrier</h4>
+<div class="outline-text-4" id="text-6-1-2">
+<p>
+Improper use of barriers can cause <b>deadlocks</b>: if not all threads pass by the barrier, those
+who do will be waiting forever&#x2026;
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+  <span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+    <span style="color: #00796b;">if</span>(iam==0){
+      <span style="color: #0097A7;">do_stuff</span>(0.5);
+    } <span style="color: #00796b;">else</span> {
+      <span style="color: #0097A7;">do_stuff</span>(0.3);
+<span style="color: #FFA000;">      #pragma</span> omp barrier
+    }
+
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread %2d reached this point at time %f.\n"</span>,iam,<span style="color: #0097A7;">secs</span>()-t);
+  }
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org2162d54" class="outline-3">
+<h3 id="org2162d54"><span class="section-number-3">6.2</span> Critical sections</h3>
+<div class="outline-text-3" id="text-6-2">
+</div>
+<div id="outline-container-org7832dd7" class="outline-4">
+<h4 id="org7832dd7"><span class="section-number-4">6.2.1</span> Critical</h4>
+<div class="outline-text-4" id="text-6-2-1">
+<p>
+The <code>critical</code> directive identifies a code block which is executed in <b>mutual exclusion</b> by all
+threads, i.e., one at a time.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+  <span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp critical
+    {
+      <span style="color: #0097A7;">do_stuff</span>(0.1);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"This is done by %2d  at time %f\n"</span>,iam, <span style="color: #0097A7;">secs</span>()-t);
+    }
+  }
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org829a6c6" class="outline-4">
+<h4 id="org829a6c6"><span class="section-number-4">6.2.2</span> Critical scope</h4>
+<div class="outline-text-4" id="text-6-2-2">
+<p>
+Critical sections can have names. The name argument is used to identify the critical construct. For
+any critical construct for which name is not specified, the effect is as if an identical
+(unspecified) name was specified. It is not possible to have two or more threads in different
+critical regions that have the same name!
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">iam</span>;
+  <span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #0097A7;">private</span>(iam)
+  {
+    iam = <span style="color: #0097A7;">omp_get_thread_num</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp <span style="color: #0097A7;">critical</span> (toti)
+    {
+      <span style="color: #0097A7;">do_stuff</span>(0.1);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"First  is done by %2d  at time %f\n"</span>,iam, <span style="color: #0097A7;">secs</span>()-t);
+    }
+
+<span style="color: #FFA000;">#pragma</span> omp <span style="color: #0097A7;">critical</span> (toto)
+    {
+      <span style="color: #0097A7;">do_stuff</span>(0.1);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Second is done by %2d  at time %f\n"</span>,iam, <span style="color: #0097A7;">secs</span>()-t);
+    }
+  }
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org39b483e" class="outline-3">
+<h3 id="org39b483e"><span class="section-number-3">6.3</span> Atomic instructions</h3>
+<div class="outline-text-3" id="text-6-3">
+</div>
+<div id="outline-container-orgb92f60b" class="outline-4">
+<h4 id="orgb92f60b"><span class="section-number-4">6.3.1</span> Atomic</h4>
+<div class="outline-text-4" id="text-6-3-1">
+<p>
+The atomic construct ensures that a specific storage location is accessed atomically so that
+possible simultaneous reads and writes by multiple threads do not result in indeterminate
+values. Five types of atomic constructs exist: <code>read</code>, <code>write</code>, <code>update</code>, <code>capture</code> and
+<code>compare</code>
+</p>
+
+<ul class="org-ul">
+<li><code>read</code>: atomically read a memory location, i.e., <code>x</code> can not change while being read</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>, <span style="color: #EF6C00;">v</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+  {
+<span style="color: #FFA000;">    #pragma</span> atomic read
+    v = x;
+  }
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org6d9f20d" class="outline-4">
+<h4 id="org6d9f20d"><span class="section-number-4">6.3.2</span> Atomic</h4>
+<div class="outline-text-4" id="text-6-3-2">
+<ul class="org-ul">
+<li><code>write</code>: atomically write a memory location</li>
+
+<li><code>update</code>: atomically update (i.e. read-modify-write) a memory location</li>
+</ul>
+
+<p>
+So what's the interest of atomic? take this example: we could certainly use <code>critical</code> to
+protect the update of <code>x[]</code> but this would prevent calls to <code>compute_one</code> to be executed
+concurrently. With <code>atomic</code> only the update of <code>x[]</code> is serialized.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t_start</span>=<span style="color: #0097A7;">secs</span>(), <span style="color: #EF6C00;">t_end</span>;
+  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>, <span style="color: #EF6C00;">n</span>=100, <span style="color: #EF6C00;">m</span>=5, <span style="color: #EF6C00;">tot</span>=0, <span style="color: #EF6C00;">x</span>[5]={0,0,0,0,0};
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #00796b;">for</span>
+    <span style="color: #00796b;">for</span>(i=0; i&lt;n; i++){
+<span style="color: #FFA000;">#pragma</span> omp atomic update
+      x[<span style="color: #0097A7;">rnd_int</span>()%m] += <span style="color: #0097A7;">compute_one</span>(0.01);
+    }
+  t_end = <span style="color: #0097A7;">secs</span>()-t_start;
+
+  <span style="color: #00796b;">for</span>(i=0; i&lt;m; i++)
+    tot += x[i];
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"\nTot:%10d   time:%f\n"</span>,tot, t_end);
+</pre>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgd6f9a5a" class="outline-4">
+<h4 id="orgd6f9a5a"><span class="section-number-4">6.3.3</span> Atomic</h4>
+<div class="outline-text-4" id="text-6-3-3">
+<ul class="org-ul">
+<li><code>capture</code>: atomically update a memory location and capture its initial or final value</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>, <span style="color: #EF6C00;">v</span>, <span style="color: #EF6C00;">y</span>, <span style="color: #EF6C00;">w</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+  {
+    <span style="color: #607d8b;">/* </span><span style="color: #607d8b;">Capture initial value</span><span style="color: #607d8b;"> */</span>
+<span style="color: #FFA000;">    #pragma</span> atomic capture
+    v = x++;
+
+    <span style="color: #607d8b;">/* </span><span style="color: #607d8b;">Capture final value</span><span style="color: #607d8b;"> */</span>
+<span style="color: #FFA000;">    #pragma</span> atomic capture
+    w = ++y;
+
+  }
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5cd7f9" class="outline-4">
+<h4 id="orgc5cd7f9"><span class="section-number-4">6.3.4</span> Atomic</h4>
+<div class="outline-text-4" id="text-6-3-4">
+<ul class="org-ul">
+<li><code>compare</code>: atomically and conditionally update a memory location</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>, <span style="color: #EF6C00;">n</span>=1000, <span style="color: #EF6C00;">min</span>=99999999;
+<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>[n];  
+
+<span style="color: #0097A7;">rand_fill</span>(x, n);
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #00796b;">for</span>
+<span style="color: #00796b;">for</span>(i=0; i&lt;n; i++){
+<span style="color: #FFA000;">  #pragma</span> omp atomic compare
+  <span style="color: #00796b;">if</span> (x[i] &lt; min) { min = x[i]; }
+  }
+
+<span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Min is %d\n"</span>,min);
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org6ba7c1e" class="outline-3">
+<h3 id="org6ba7c1e"><span class="section-number-3">6.4</span> Reductions</h3>
+<div class="outline-text-3" id="text-6-4">
+</div>
+<div id="outline-container-org9527685" class="outline-4">
+<h4 id="org9527685"><span class="section-number-4">6.4.1</span> Reductions</h4>
+<div class="outline-text-4" id="text-6-4-1">
+<p>
+Assume this simple code that computes the sum of all the elements of an array
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>, <span style="color: #EF6C00;">sum</span>, <span style="color: #EF6C00;">n</span>=1000;
+<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>[n];  
+
+<span style="color: #0097A7;">rand_fill</span>(x, n); sum=0;
+
+<span style="color: #00796b;">for</span>(i=0; i&lt;n; i++){
+   sum += x[i];
+}
+
+<span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Sum is %d\n"</span>,sum);
+
+</pre>
+</div>
+
+
+<p>
+The iterations of this loop are clearly dependent because of the updates on <code>sum</code>. We could
+actually use a critical section or an atomic update but we would loose all performance.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6012049" class="outline-4">
+<h4 id="org6012049"><span class="section-number-4">6.4.2</span> Reductions</h4>
+<div class="outline-text-4" id="text-6-4-2">
+<p>
+<b>Reductions</b> allow us to take advantage of associativity and commutativity of some operators (+
+in this case):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">    <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>, <span style="color: #EF6C00;">sum</span>, <span style="color: #EF6C00;">n</span>=1000;
+    <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>[n];  
+
+    <span style="color: #0097A7;">rand_fill</span>(x, n); sum=0;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel <span style="color: #00796b;">for</span> <span style="color: #0097A7;">reduction</span>(+:sum)
+    <span style="color: #00796b;">for</span>(i=0; i&lt;n; i++){
+       sum += x[i];
+    }
+
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Sum is %d\n"</span>,sum);
+
+</pre>
+</div>
+
+<p>
+The reduction clause specifies an operator and one or more list items. For each list item, a
+private copy is created in each implicit task, and is initialized appropriately for the
+operator. After the end of the region, the original list item is updated with the values of the
+private copies using the specified operator.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org96e3dcc" class="outline-4">
+<h4 id="org96e3dcc"><span class="section-number-4">6.4.3</span> Reductions</h4>
+<div class="outline-text-4" id="text-6-4-3">
+<p>
+For the <code>C</code> language, predefined reduction operators are (note that : in the table below is
+actually a | )
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Operator</th>
+<th scope="col" class="org-left">Initializer</th>
+<th scope="col" class="org-left">Combiner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">+</td>
+<td class="org-left">omp<sub>priv</sub>=0</td>
+<td class="org-left">omp<sub>out</sub> += omp<sub>in</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">*</td>
+<td class="org-left">omp<sub>priv</sub>=1</td>
+<td class="org-left">omp<sub>out</sub> *= omp<sub>in</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">~</td>
+<td class="org-left">omp<sub>priv</sub>=~0</td>
+<td class="org-left">omp<sub>out</sub> ~= omp<sub>in</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">:</td>
+<td class="org-left">omp<sub>priv</sub>=0</td>
+<td class="org-left">omp<sub>out</sub> := omp<sub>in</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">^</td>
+<td class="org-left">omp<sub>priv</sub>=0</td>
+<td class="org-left">omp<sub>out</sub> ^= omp<sub>in</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">&amp;&amp;</td>
+<td class="org-left">omp<sub>priv</sub>=1</td>
+<td class="org-left">omp<sub>out</sub>  = omp<sub>in</sub> &amp;&amp; omp<sub>out</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">::</td>
+<td class="org-left">omp<sub>priv</sub>=0</td>
+<td class="org-left">omp<sub>out</sub>  = omp<sub>in</sub> :: omp<sub>out</sub></td>
+</tr>
+
+<tr>
+<td class="org-left">max</td>
+<td class="org-left">omp<sub>priv</sub>=minval</td>
+<td class="org-left">omp<sub>out</sub>  = max(omp<sub>in,omp</sub><sub>out</sub>)</td>
+</tr>
+
+<tr>
+<td class="org-left">min</td>
+<td class="org-left">omp<sub>priv</sub>=maxval</td>
+<td class="org-left">omp<sub>out</sub>  = min(omp<sub>in,omp</sub><sub>out</sub>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<div id="outline-container-org5c6eb3b" class="outline-2">
+<h2 id="org5c6eb3b"><span class="section-number-2">7</span> Tasks</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orgf8eb5e1" class="outline-3">
+<h3 id="orgf8eb5e1"><span class="section-number-3">7.1</span> Task</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+The OpenMP <code>task</code> construct simply identifies a block of code which is ready to be executed and
+whose execution is <b>deferred</b>. Once the task is created, it can be executed <b>by any thread, at
+any time</b>. This means that we can not make any assumptions on when a task is executed and by
+which thread and in which order all the created tasks are executed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+<span style="color: #FFA000;">#pragma</span> omp task
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thead %2d does task 1\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+
+<span style="color: #FFA000;">#pragma</span> omp task
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thead %2d does task 2\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+
+<span style="color: #FFA000;">#pragma</span> omp task
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thead %2d does task 3\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+
+<span style="color: #FFA000;">#pragma</span> omp task
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thead %2d does task 4\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+  }
+}
+</pre>
+</div>
+
+<p>
+Why do we need the <code>master</code> construct in the code above?
+</p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org998ee5d" class="outline-3">
+<h3 id="org998ee5d"><span class="section-number-3">7.2</span> Task data</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+A slightly more complex example, with a bug:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>;
+<span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Hello %p\n"</span>,&amp;i);
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+    <span style="color: #00796b;">for</span>(i=0; i&lt;6; i++)
+      {
+<span style="color: #FFA000;">#pragma</span> omp task
+        <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread  %d   iteration: %d\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), i);
+      }
+  }
+}
+</pre>
+</div>
+
+<p>
+What went wrong?
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org15726bf" class="outline-3">
+<h3 id="org15726bf"><span class="section-number-3">7.3</span> Task data</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+The value of shared variables accessed within a task might change between the creation of the
+task and its actual execution. Some clauses can be used to define the scope of variables within
+tasks:
+</p>
+
+<ul class="org-ul">
+<li><code>shared(x)</code> means that when the task is executed x is the same variable (the same memory
+location) as when the task was created</li>
+
+<li><code>firstprivate(x)</code> means that x is private to the task, i.e., when the task is created, a brand
+new variable x is created as well and its value is set to be the same as the value of x in the
+enclosing context at the moment when the task is created. This new copy is destroyed when the
+task is finished</li>
+
+<li><code>private(x)</code> means that x is private to the task, i.e., when the task is created, a brand new
+variable x is created as well. This new copy is destroyed when the task is finished</li>
+</ul>
+
+<p>
+If a variable is <code>private</code> in the parallel region it is implicitly <code>firstprivate</code> in the included
+tasks
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org59be8b4" class="outline-3">
+<h3 id="org59be8b4"><span class="section-number-3">7.4</span> Task data</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+A slightly more complex example, with a bugfix:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>;
+<span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Hello %p\n"</span>,&amp;i);
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+    <span style="color: #00796b;">for</span>(i=0; i&lt;6; i++)
+      {
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">firstprivate</span>(i)
+        <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread  %d   iteration: %d\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>(), i);
+      }
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org5c8c79f" class="outline-3">
+<h3 id="org5c8c79f"><span class="section-number-3">7.5</span> Task if</h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+Creating and handling tasks has a cost. Therefore, it is not always worth creating a task, for
+example, if the task has only little work to do. The <code>if</code> clause can be used to choose whether to
+create a task or immediately run the code block
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">w</span>=0.4;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+<span style="color: #FFA000;">#pragma</span> omp task
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread  %d executes this first task\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>());
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #00796b;">if</span>(w&gt;0.4)
+    {
+      <span style="color: #0097A7;">do_stuff</span>(w);
+      <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"Thread  %d executes this second task\n"</span>, <span style="color: #0097A7;">omp_get_thread_num</span>());
+    }
+
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org41ddf48" class="outline-3">
+<h3 id="org41ddf48"><span class="section-number-3">7.6</span> Taskwait</h3>
+<div class="outline-text-3" id="text-7-6">
+<p>
+So how can we be sure that some tasks are actually executed? The <code>taskwait</code> directive ensures
+that all the previously submitted tasks have been executed. Note that this does not include
+descendants, i.e., tasks that have been generated by other tasks.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>, <span style="color: #EF6C00;">y</span>, <span style="color: #EF6C00;">z</span>;
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+<span style="color: #FFA000;">#pragma</span> omp task
+    x = <span style="color: #0097A7;">compute_one</span>(0.2);
+
+<span style="color: #FFA000;">#pragma</span> omp task
+    y = <span style="color: #0097A7;">compute_one</span>(0.2);
+
+<span style="color: #FFA000;">#pragma</span> omp taskwait
+    z = x+y;
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"z is %d\n"</span>, z);
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0cfc04b" class="outline-3">
+<h3 id="org0cfc04b"><span class="section-number-3">7.7</span> Task dependencies</h3>
+<div class="outline-text-3" id="text-7-7">
+<p>
+It is possible to define an execution order by specifying task <b>dependencies</b>. This is done
+through the <code>depend</code> clause and the Bernstein conditions:
+</p>
+
+<ul class="org-ul">
+<li>The <code>in</code> dependence-type. The generated task will be a dependent task of all previously
+generated sibling tasks that reference at least one of the list items in an <code>out</code> or <code>inout</code>
+dependence-type list.</li>
+
+<li>The <code>out</code> and <code>inout</code> dependence-types. The generated task will be a dependent task of all
+previously generated sibling tasks that reference at least one of the list items in an <code>in</code>,
+<code>out</code>, or <code>inout</code> dependence-type list.</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org88ce1a3" class="outline-3">
+<h3 id="org88ce1a3"><span class="section-number-3">7.8</span> Task dependencies</h3>
+<div class="outline-text-3" id="text-7-8">
+<p>
+Example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">a</span>, <span style="color: #EF6C00;">b</span>, <span style="color: #EF6C00;">c</span>, <span style="color: #EF6C00;">x</span>, <span style="color: #EF6C00;">y</span>;
+<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(out:a)
+    a = <span style="color: #0097A7;">f_a</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(out:b)
+    b = <span style="color: #0097A7;">f_b</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(out:c)
+    c = <span style="color: #0097A7;">f_c</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(in:b,c) <span style="color: #0097A7;">depend</span>(out:x)
+    x = <span style="color: #0097A7;">f_x</span>(b, c);
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(in:a,x) <span style="color: #0097A7;">depend</span>(out:y)
+    y = <span style="color: #0097A7;">f_y</span>(a, x);
+
+<span style="color: #FFA000;">#pragma</span> omp taskwait
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"y: %d (correct value is 9) and time is %f\n"</span>,y,<span style="color: #0097A7;">secs</span>()-t);
+  }
+}
+</pre>
+</div>
+
+<p>
+Can you draw the dependency graph?
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org7799276" class="outline-3">
+<h3 id="org7799276"><span class="section-number-3">7.9</span> Task priorities</h3>
+<div class="outline-text-3" id="text-7-9">
+<p>
+Assuming only two threads are available and all functions take one second, the following two
+schedulings are possible.
+</p>
+
+
+<div class="figure">
+<p><img src="figures/sched.png" alt="sched.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd2da1df" class="outline-3">
+<h3 id="orgd2da1df"><span class="section-number-3">7.10</span> Task priorities</h3>
+<div class="outline-text-3" id="text-7-10">
+<p>
+The <code>priority</code> clause can be used to give the OpenMP scheduler a hint on the importance of a task
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">a</span>, <span style="color: #EF6C00;">b</span>, <span style="color: #EF6C00;">c</span>, <span style="color: #EF6C00;">x</span>, <span style="color: #EF6C00;">y</span>;
+<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(out:b) <span style="color: #0097A7;">priority</span>(2)
+    b = <span style="color: #0097A7;">f_b</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(out:c) <span style="color: #0097A7;">priority</span>(2)
+    c = <span style="color: #0097A7;">f_c</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(out:a)
+    a = <span style="color: #0097A7;">f_a</span>();
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(in:b,c) <span style="color: #0097A7;">depend</span>(out:x)
+    x = <span style="color: #0097A7;">f_x</span>(b, c);
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">depend</span>(in:a,x) <span style="color: #0097A7;">depend</span>(out:y)
+    y = <span style="color: #0097A7;">f_y</span>(a, x);
+
+<span style="color: #FFA000;">#pragma</span> omp taskwait
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"y: %d (correct value is 9) and time is %f\n"</span>,y,<span style="color: #0097A7;">secs</span>()-t);
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org511f9b9" class="outline-3">
+<h3 id="org511f9b9"><span class="section-number-3">7.11</span> Task dependencies and pointers</h3>
+<div class="outline-text-3" id="text-7-11">
+<p>
+When using pointers to specify dependencies, you should dereference it to make sure the
+dependence is inferred from the pointed data rather than the pointer variable.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>[2]={0,0};
+<span style="color: #0097A7;">int</span> *<span style="color: #EF6C00;">p</span>=x;
+<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">t</span>=<span style="color: #0097A7;">secs</span>();
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+<span style="color: #FFA000;">#pragma</span> omp master
+  {
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">firstprivate</span>(p) <span style="color: #0097A7;">depend</span>(out:*p)
+    *p = <span style="color: #0097A7;">compute_one</span>(1.0);
+
+    p+=1;
+
+<span style="color: #FFA000;">#pragma</span> omp task <span style="color: #0097A7;">firstprivate</span>(p) <span style="color: #0097A7;">depend</span>(out:*p)
+    *p = <span style="color: #0097A7;">compute_one</span>(1.0);
+
+<span style="color: #FFA000;">#pragma</span> omp taskwait
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"x: {%d,%d} (correct value is {1,1}) and time is %f\n"</span>,x[0],x[1],<span style="color: #0097A7;">secs</span>()-t);
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org7e1ee40" class="outline-2">
+<h2 id="org7e1ee40"><span class="section-number-2">8</span> Locks</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-org84a7c6b" class="outline-3">
+<h3 id="org84a7c6b"><span class="section-number-3">8.1</span> Locks</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+A lock is a data of type <code>omp_lock_t</code> which can be used to prevent simultaneous access to shared
+resources according to the schema
+</p>
+
+<ul class="org-ul">
+<li>acquire (or set or lock) the lock</li>
+
+<li>access data</li>
+
+<li>release (on unset or unlock) the lock</li>
+</ul>
+
+<p>
+Acquisition of the lock is exclusive in the sense that only one threads can hold the lock at a
+given time. A lock can be in one of the following states:
+</p>
+
+<ul class="org-ul">
+<li><b>uninitialized</b>: the lock is not active and cannot be acquired/released by any thread;</li>
+
+<li><b>unlocked</b>: the lock has been initialized and can be acquired by any thread;</li>
+
+<li><b>locked</b>: the lock has been acquired by one thread and cannot be acquired by any other thread
+until the owner releases it.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgd982b5b" class="outline-3">
+<h3 id="orgd982b5b"><span class="section-number-3">8.2</span> Locks</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+Transitions through states can be achieved with the following routines
+</p>
+
+<ul class="org-ul">
+<li><code>omp_init_lock</code>: initializes a lock</li>
+
+<li><code>omp_destroy_lock</code>: uninitializes a lock</li>
+
+<li><code>omp_set_lock</code>: waits until a lock is available, and then sets it</li>
+
+<li><code>omp_unset_lock</code>: unsets a lock</li>
+
+<li><code>omp_test_lock</code>: tests a lock, and sets it if it is available</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org6866f16" class="outline-3">
+<h3 id="org6866f16"><span class="section-number-3">8.3</span> Locks</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">omp_lock_t</span> <span style="color: #EF6C00;">lock</span>;
+<span style="color: #0097A7;">omp_init_lock</span>(&amp;lock);
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+  <span style="color: #0097A7;">omp_set_lock</span>(&amp;lock);
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"%d: It's my turn to use the resource\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+  <span style="color: #0097A7;">use_resource</span>();
+  <span style="color: #0097A7;">omp_unset_lock</span>(&amp;lock);
+}
+
+<span style="color: #0097A7;">omp_destroy_lock</span>(&amp;lock);
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgdfe3b4b" class="outline-3">
+<h3 id="orgdfe3b4b"><span class="section-number-3">8.4</span> Locks</h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+Example with test lock
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0097A7;">omp_lock_t</span> <span style="color: #EF6C00;">lock</span>;
+<span style="color: #0097A7;">omp_init_lock</span>(&amp;lock);
+
+<span style="color: #FFA000;">#pragma</span> omp parallel
+{
+
+  <span style="color: #00796b;">while</span>(<span style="color: #2196f3;">!</span><span style="color: #0097A7;">omp_test_lock</span>(&amp;lock)){
+    <span style="color: #607d8b;">/* </span><span style="color: #607d8b;">if lock is already locked, I do some other useful stuff</span><span style="color: #607d8b;"> */</span>
+    <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"%d: lock is busy, I do some stuff\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+    <span style="color: #0097A7;">do_stuff</span>(0.5);
+  }
+
+  <span style="color: #0097A7;">printf</span>(<span style="color: #689f38;">"%d: It's my turn to use the resource\n"</span>,<span style="color: #0097A7;">omp_get_thread_num</span>());
+  <span style="color: #0097A7;">use_resource</span>();
+  <span style="color: #0097A7;">omp_unset_lock</span>(&amp;lock);
+}
+
+<span style="color: #0097A7;">omp_destroy_lock</span>(&amp;lock);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org197fb24" class="outline-2">
+<h2 id="org197fb24"><span class="section-number-2">9</span> Aux code</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+<pre class="src src-C" id="org881c7e5">  <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">seed</span>=-1;
+<span style="color: #FFA000;">  #pragma</span> omp <span style="color: #0097A7;">threadprivate</span>(seed)
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">rnd_int</span>() {
+    <span style="color: #607d8b;">// </span><span style="color: #607d8b;">&amp; 0x7fffffff is equivalent to modulo with RNG_MOD = 2^31</span>
+<span style="color: #FFA000;">#if</span> <span style="color: #FFA000;">defined</span>(_OPENMP)
+    <span style="color: #00796b;">if</span>(seed==-1) seed = <span style="color: #0097A7;">omp_get_thread_num</span>()+1;
+<span style="color: #FFA000;">#else</span>
+    <span style="color: #00796b;">if</span>(seed==-1) seed = 1;
+<span style="color: #FFA000;">#endif</span>
+    <span style="color: #00796b;">return</span> (seed = (seed * 1103515245 + 12345) &amp; 0x7fffffff);
+  }
+
+  <span style="color: #0097A7;">void</span> <span style="color: #0097A7;">rand_fill</span>(<span style="color: #0097A7;">int</span> *<span style="color: #EF6C00;">x</span>, <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">n</span>){
+    <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">i</span>;
+    <span style="color: #00796b;">for</span>(i=0; i&lt;n; i++){
+      x[i]=<span style="color: #0097A7;">rnd_int</span>()%n-n/2;
+    }
+  }
+
+  <span style="color: #0097A7;">long</span> <span style="color: #0097A7;">usecs</span> (){
+    <span style="color: #00796b;">struct</span> <span style="color: #0097A7;">timeval</span> <span style="color: #EF6C00;">t</span>;
+
+    <span style="color: #0097A7;">gettimeofday</span>(&amp;t,<span style="color: #558b2f;">NULL</span>);
+    <span style="color: #00796b;">return</span> t.tv_sec*1000000+t.tv_usec;
+  }
+
+  <span style="color: #0097A7;">double</span> <span style="color: #0097A7;">secs</span> (){
+    <span style="color: #00796b;">struct</span> <span style="color: #0097A7;">timeval</span> <span style="color: #EF6C00;">t</span>;
+
+    <span style="color: #0097A7;">gettimeofday</span>(&amp;t,<span style="color: #558b2f;">NULL</span>);
+    <span style="color: #00796b;">return</span> ((<span style="color: #0097A7;">double</span>)(t.tv_sec*1000000+t.tv_usec))/1000000.0;
+  }
+
+  <span style="color: #0097A7;">void</span> <span style="color: #0097A7;">do_stuff</span>(<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">sec</span>){
+
+    <span style="color: #0097A7;">long</span> <span style="color: #EF6C00;">s</span>, <span style="color: #EF6C00;">e</span>;
+    s=0; e=0;
+    s = <span style="color: #0097A7;">usecs</span>();
+    <span style="color: #00796b;">while</span>(((<span style="color: #0097A7;">double</span>) e-s)/1000000 &lt; sec)
+      {
+        e = <span style="color: #0097A7;">usecs</span>();
+      }
+    <span style="color: #00796b;">return</span>;
+  }
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">compute_one</span>(<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">sec</span>){
+    <span style="color: #0097A7;">do_stuff</span>(sec);
+    <span style="color: #00796b;">return</span> 1;
+  }
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_a</span>(){
+    <span style="color: #0097A7;">do_stuff</span>(1.0);
+    <span style="color: #00796b;">return</span> 1;
+  }
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_b</span>(){
+    <span style="color: #0097A7;">do_stuff</span>(1.0);
+    <span style="color: #00796b;">return</span> 2;
+  }
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_c</span>(){
+    <span style="color: #0097A7;">do_stuff</span>(1.0);
+    <span style="color: #00796b;">return</span> 3;
+  }
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_x</span>(<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">b</span>, <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">c</span>){
+    <span style="color: #0097A7;">do_stuff</span>(1.0);
+    <span style="color: #00796b;">return</span> b+c+1;
+  }
+
+  <span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_y</span>(<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">a</span>, <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>){
+    <span style="color: #0097A7;">do_stuff</span>(1.0);
+    <span style="color: #00796b;">return</span> a+x+2;
+  }
+
+  <span style="color: #0097A7;">void</span> <span style="color: #0097A7;">use_resource</span>(){
+    <span style="color: #0097A7;">do_stuff</span>(1.0);
+    <span style="color: #00796b;">return</span>;
+  }
+
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-C" id="org58ab20e"><span style="color: #0097A7;">int</span> <span style="color: #0097A7;">rnd_int</span>();
+<span style="color: #0097A7;">void</span> <span style="color: #0097A7;">rand_fill</span>(<span style="color: #0097A7;">int</span> *<span style="color: #EF6C00;">x</span>, <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">n</span>);
+<span style="color: #0097A7;">long</span> <span style="color: #0097A7;">usecs</span> ();
+<span style="color: #0097A7;">double</span> <span style="color: #0097A7;">secs</span> ();
+<span style="color: #0097A7;">void</span> <span style="color: #0097A7;">do_stuff</span>(<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">sec</span>);
+<span style="color: #0097A7;">int</span> <span style="color: #0097A7;">compute_one</span>(<span style="color: #0097A7;">double</span> <span style="color: #EF6C00;">sec</span>);
+<span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_a</span>();
+<span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_b</span>();
+<span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_c</span>();
+<span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_x</span>(<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">b</span>, <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">c</span>);
+<span style="color: #0097A7;">int</span> <span style="color: #0097A7;">f_y</span>(<span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">a</span>, <span style="color: #0097A7;">int</span> <span style="color: #EF6C00;">x</span>);
+<span style="color: #0097A7;">void</span> <span style="color: #0097A7;">use_resource</span>();
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Alfredo Buttari (alfredo.buttari@irit.fr)</p>
+<p class="date">Created: 2023-01-24 mar. 08:13</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

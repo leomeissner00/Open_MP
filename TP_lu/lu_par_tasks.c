@@ -15,24 +15,25 @@ void lu_par_tasks(Matrix A, info_type info){
   
   #pragma omp parallel
   {
-  #pragma omp single
-  {
-  for(i=0; i<info.NB; i++){
+    #pragma omp single
+    {
+      //single thread so i is private
+      for(i=0; i<info.NB; i++){
     
-    /* Do the Panel operation on column i */
-    #pragma omp task depend(inout:A[i]) firstprivate(i)
-    panel(A[i], i, info);
+        /* Do the Panel operation on column i */
+        #pragma omp task depend(inout:A[i]) firstprivate(i)
+        panel(A[i], i, info);
     
-    /* Parallelize this loop     */
+        /* Parallelize this loop     */
     
-    for(j=i+1; j<info.NB; j++){
-      /* Update column j with respect to the result of panel(A, i) */
-      #pragma omp task depend(in:A[i]) depend(inout:A[j]) firstprivate(i,j)
-      update(A[i], A[j], i, j, info);
+        for(j=i+1; j<info.NB; j++){
+          /* Update column j with respect to the result of panel(A, i) */
+          #pragma omp task depend(in:A[i]) depend(inout:A[j]) firstprivate(i,j)
+          update(A[i], A[j], i, j, info);
+        }
+      }
     }
-  }
-  }
-  #pragma omp taskwait
+    #pragma omp taskwait
   }
     
   

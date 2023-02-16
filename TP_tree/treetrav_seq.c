@@ -10,7 +10,7 @@ extern int countnodes[MAXTHREADS];
    routine */
 void treetraverse_seq(TreeNode *root){
 
-  int i;
+  int i; 
 
   /* Initialize the counter to 0. MAXTHREADS is the maximum number of
      allowed threads. */

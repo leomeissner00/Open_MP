@@ -6,7 +6,7 @@
 #include "omp.h"
 #include "treetrav.h"
 
-long usecs (){
+long usecs (){ 
   struct timeval t;
 
   gettimeofday(&t,NULL);

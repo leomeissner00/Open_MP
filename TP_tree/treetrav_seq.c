@@ -4,7 +4,7 @@
 #include "treetrav.h"
 #include "omp.h"
  
-extern int countnodes[MAXTHREADS];
+extern int countnodes[MAXTHREADS];     
 
 /* This is simply a wrapper for the recursive tree traversal
    routine */
